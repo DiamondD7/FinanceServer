@@ -100,6 +100,16 @@ namespace server.Controllers
             return NoContent();
         }
 
+        // DELETE: /api/FinanceTracker/
+        [HttpDelete("deleteAll")]
+        public async Task<IActionResult> DeleteAllFinanceTracker()
+        {
+            var todelete = _context.FinanceTracker.Select(a => new FinanceTracker { Id = a.Id }).ToList();
+            _context.FinanceTracker.RemoveRange(todelete);
+            await _context.SaveChangesAsync();
+            return Ok();
+        }
+
         private bool FinanceTrackerExists(int id)
         {
             return _context.FinanceTracker.Any(e => e.Id == id);
